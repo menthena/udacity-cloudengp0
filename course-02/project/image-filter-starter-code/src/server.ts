@@ -13,22 +13,25 @@ import fs from "fs";
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
 
-  app.get("/filteredimage", async (req, res) => {
-    const imageUrl = req.query.image_url;
-    if (!imageUrl) {
-      return res.send(404);
-    }
-    const filteredImage = await filterImageFromURL(imageUrl);
-    res.sendFile(filteredImage);
-    res.on("close", () => {
-      fs.unlinkSync(filteredImage);
-      console.info("deleted temp file:", filteredImage);
-    });
-  });
+  app.get(
+    "/filteredimage",
+    async (req: express.Request, res: express.Response) => {
+      const imageUrl: string = req.query.image_url;
+      if (!imageUrl) {
+        return res.send(404);
+      }
+      const filteredImage = await filterImageFromURL(imageUrl);
+      res.sendFile(filteredImage);
+      res.on("close", () => {
+        fs.unlinkSync(filteredImage);
+        console.info("deleted temp file:", filteredImage);
+      });
+    },
+  );
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (req, res) => {
+  app.get("/", async (_req: express.Request, res: express.Response) => {
     res.send("try GET /filteredimage?image_url={{}}");
   });
 
