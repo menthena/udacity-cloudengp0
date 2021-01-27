@@ -10,7 +10,7 @@
     "dev": "ts-node-dev ./src/server.ts"
   },
   "engines": {
-    "node": ">=v12.0.0"
+    "node": "v12.0.0"
   },
   "repository": {
     "type": "git",
